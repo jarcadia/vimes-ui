@@ -1,0 +1,87 @@
+@import url(https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css);
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+
+body {
+    font: normal 14px Roboto, serif;
+}
+
+:focus {
+    outline: none;
+}
+
+.rippleable::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*z-index: -1;*/
+    width: calc(var(--r) * 1px);
+    height: calc(var(--r) * 1px);
+    border-radius: 50%;
+    background: var(--c);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.rippleable.rippling:not(.secondary)::after {
+    animation: ripple-expand var(--rd) forwards, ripple-fade-in var(--fid) forwards;
+}
+
+.rippleable.rippling.secondary::after {
+    animation: ripple-expand-secondary var(--rd) forwards, ripple-fade-in-secondary var(--fid) forwards;
+}
+
+.rippleable.fading::after {
+    animation: ripple-fade-out var(--fod) forwards;
+    transform: translate(calc(((var(--w) / 2) - (var(--r) / 2)) * 1px), calc(((var(--h) / 2) - (var(--r) / 2)) * 1px)) scale(1);
+}
+
+@keyframes ripple-expand {
+    from {
+        animation-timing-function: ease-in-out;
+        transform: translate(calc((var(--x) - (var(--r) / 2)) * 1px), calc((var(--y) - (var(--r) / 2)) * 1px)) scale(.35);
+    }
+    to {
+        transform: translate(calc(((var(--w) / 2) - (var(--r) / 2)) * 1px), calc(((var(--h) / 2) - (var(--r) / 2)) * 1px)) scale(1);
+    }
+}
+
+@keyframes ripple-fade-in {
+    from   {
+        animation-timing-function: linear;
+        opacity: 0
+    }
+    to {
+        opacity: var(--o);
+    }
+}
+
+@keyframes ripple-expand-secondary {
+    from {
+        animation-timing-function: ease-in-out;
+        transform: translate(calc((var(--x) - (var(--r) / 2)) * 1px), calc((var(--y) - (var(--r) / 2)) * 1px)) scale(.35);
+    }
+    to {
+        transform: translate(calc(((var(--w) / 2) - (var(--r) / 2)) * 1px), calc(((var(--h) / 2) - (var(--r) / 2)) * 1px)) scale(1);
+    }
+}
+
+@keyframes ripple-fade-in-secondary {
+    from   {
+        animation-timing-function: linear;
+        opacity: 0
+    }
+    to {
+        opacity: var(--o);
+    }
+}
+
+@keyframes ripple-fade-out {
+    from   {
+        animation-timing-function: linear;
+        opacity: var(--o);
+    }
+    to {
+        opacity: 0;
+    }
+}
